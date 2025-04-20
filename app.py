@@ -18,6 +18,7 @@ warnings.filterwarnings('ignore')
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 #loading data & cr. classes
+sentence = 'I like sports'
 train_iter = iter(AG_NEWS(split="train"))
 y, text = next((train_iter))
 ag_news_labels = {1: "World", 2: "Sports", 3: "Business", 4: "Sci/Tec"}
@@ -89,7 +90,7 @@ def predict(text, text_pipeline):
         text = torch.tensor(text_pipeline(text))
         output = model(text, torch.tensor([0]))
         return ag_news_labels[output.argmax(1).item() + 1]
-print(f"prediction on sentence about sports: {predict('I like sports', text_pipeline)}")
+print(f"prediction on sentence about sports: {predict(sentence, text_pipeline)}")
 def evaluate(dataloader):
     model.eval()
     total_acc, total_count = 0, 0
