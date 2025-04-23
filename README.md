@@ -59,4 +59,4 @@ python -m src.predict \
 
 ## License
 
-MIT © Your Name
+GNU GPL V3 © Krzychu
