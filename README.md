@@ -1,62 +1,44 @@
-# AG_NEWS Text Classification
+# Transformer-Based Text Classifier
 
-A simple PyTorch/TorchText project for classifying news articles from the AG_NEWS dataset using an `EmbeddingBag + Linear` model.
-
-## Project Structure
-
-```
-.
-├── src/
-│   ├── data/
-│   │   └── dataset.py        # Vocab building & DataLoader utils
-│   ├── model/
-│   │   └── text_classification.py  # Model definition
-│   ├── train.py              # Training & evaluation script
-│   └── predict.py            # Single‐sentence prediction script
-├── requirements.txt
-└── README.md
-```
+## Overview
+This project implements a transformer‐encoder text classifier on the AG_NEWS dataset using PyTorch and TorchText. The code is organized into modules for data, model, training, evaluation, visualization and utilities.
 
 ## Installation
-
-1. Clone repo:
-   ```bash
-   git clone <your-repo-url>
-   cd <repo-root>
+1. Clone the repo  
+2. Create a virtual env and activate it  
+3. Install dependencies:  
    ```
-2. (Optional) create virtual env:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate
-   ```
-3. Install dependencies:
-   ```bash
    pip install -r requirements.txt
    ```
 
-## Training
+## Usage
 
-Run the training script with defaults:
-```bash
+### Training
+```
 python -m src.train \
-  --epochs 10 \
   --batch-size 64 \
+  --epochs 10 \
   --lr 0.1 \
-  --embed-dim 100 \
-  --valid-ratio 0.05 \
-  --save-path model.pth
-```
-- Outputs `model.pth` (best validation) and `training_plot.png`.
-
-## Prediction
-
-After training, feed any sentence for a label prediction:
-```bash
-python -m src.predict \
-  --model-path model.pth \
-  --sentence "Intergalactic stocks soar after new tech release"
+  --save-path my_model.pth
 ```
 
-## License
+### Evaluation
+```
+python -m src.evaluate \
+  --model-path my_model.pth
+```
 
-GNU GPL V3 © Krzychu
+### Inference
+```python
+from src.evaluate import predict, load_model
+model, vocab, tokenizer, device = load_model("my_model.pth")
+print(predict("This is a test sentence", model, vocab, tokenizer, device))
+```
+
+## Project Structure
+- **src/data/**: data pipelines & dataloaders  
+- **src/model/**: transformer classifier implementation  
+- **src/utils/**: saving/loading utilities  
+- **src/visualization.py**: plotting functions  
+- **src/train.py**: training script  
+- **src/evaluate.py**: evaluation & inference
